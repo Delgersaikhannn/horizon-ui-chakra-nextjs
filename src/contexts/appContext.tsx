@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 
-type User = { email: string };
+type User = { email: string; role: string; phone: string };
 
 interface AppContextType {
   user: User | null;

@@ -38,6 +38,7 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 // Custom components
 import { HSeparator } from 'components/separator/Separator';
@@ -47,9 +48,16 @@ import Link from 'next/link';
 import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
+import { login } from 'services/auth.service';
+import Cookies from 'universal-cookie';
+import { useUser } from 'contexts/appContext';
+import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({
+    email: 'coordinator@zevteam.mn',
+    password: 'testP@ss0987',
+  });
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
@@ -67,10 +75,35 @@ export default function SignIn() {
     { bg: 'whiteAlpha.200' },
   );
   const [show, setShow] = React.useState(false);
+  const {
+    isOpen: isLoading,
+    onClose: stopLoading,
+    onOpen: startLoading,
+  } = useDisclosure();
+
+  const { user, updateUser } = useUser();
   const handleClick = () => setShow(!show);
 
-  const onSubmit = () => {
-    console.log(formData);
+  const router = useRouter();
+  const cookies = new Cookies();
+
+  const onSubmit = async () => {
+    startLoading();
+    const res = await login(formData);
+
+    cookies.set('auth_token', res?.token);
+
+    const datas = {
+      email: res?.email,
+      phone: res?.phone,
+      role: res?.role,
+    };
+
+    updateUser(datas);
+
+    router.push('/admin/default');
+
+    stopLoading();
   };
 
   return (
@@ -165,6 +198,7 @@ export default function SignIn() {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              defaultValue={formData?.email}
             />
             <FormLabel
               ms="4px"
@@ -187,6 +221,7 @@ export default function SignIn() {
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
+                defaultValue={formData?.password}
               />
               <InputRightElement display="flex" alignItems="center" mt="4px">
                 <Icon
@@ -233,6 +268,7 @@ export default function SignIn() {
               h="50"
               mb="24px"
               onClick={onSubmit}
+              isLoading={isLoading}
             >
               Sign In
             </Button>
