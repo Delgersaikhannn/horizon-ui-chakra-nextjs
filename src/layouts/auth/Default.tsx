@@ -32,7 +32,7 @@ function AuthIllustration(props: {
         justifyContent="start"
         direction="column"
       >
-        <Link
+        {/* <Link
           href="/admin"
           style={{
             width: 'fit-content',
@@ -56,7 +56,7 @@ function AuthIllustration(props: {
               Back to Simmmple
             </Text>
           </Flex>
-        </Link>
+        </Link> */}
         {children}
         <Box
           display={{ base: 'none', md: 'block' }}

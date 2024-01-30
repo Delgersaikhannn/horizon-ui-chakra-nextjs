@@ -22,7 +22,7 @@
 
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 // Chakra imports
 import {
   Box,
@@ -49,6 +49,7 @@ import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 
 export default function SignIn() {
+  const [formData, setFormData] = useState({ email: '', password: '' });
   // Chakra color mode
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorSecondary = 'gray.400';
@@ -67,8 +68,17 @@ export default function SignIn() {
   );
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
+  const onSubmit = () => {
+    console.log(formData);
+  };
+
   return (
-    <DefaultAuthLayout illustrationBackground={'/img/auth/auth.png'}>
+    <DefaultAuthLayout
+      illustrationBackground={
+        'https://images.unsplash.com/photo-1548092372-0d1bd40894a3?q=80&w=3570&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      }
+    >
       <Flex
         maxW={{ base: '100%', md: 'max-content' }}
         w="100%"
@@ -152,6 +162,9 @@ export default function SignIn() {
               mb="24px"
               fontWeight="500"
               size="lg"
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
             />
             <FormLabel
               ms="4px"
@@ -171,6 +184,9 @@ export default function SignIn() {
                 size="lg"
                 type={show ? 'text' : 'password'}
                 variant="auth"
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
               />
               <InputRightElement display="flex" alignItems="center" mt="4px">
                 <Icon
@@ -181,7 +197,7 @@ export default function SignIn() {
                 />
               </InputRightElement>
             </InputGroup>
-            <Flex justifyContent="space-between" align="center" mb="24px">
+            {/* <Flex justifyContent="space-between" align="center" mb="24px">
               <FormControl display="flex" alignItems="center">
                 <Checkbox
                   id="remember-login"
@@ -208,7 +224,7 @@ export default function SignIn() {
                   Forgot password?
                 </Text>
               </Link>
-            </Flex>
+            </Flex> */}
             <Button
               fontSize="sm"
               variant="brand"
@@ -216,11 +232,12 @@ export default function SignIn() {
               w="100%"
               h="50"
               mb="24px"
+              onClick={onSubmit}
             >
               Sign In
             </Button>
           </FormControl>
-          <Flex
+          {/* <Flex
             flexDirection="column"
             justifyContent="center"
             alignItems="start"
@@ -240,7 +257,7 @@ export default function SignIn() {
                 </Text>
               </Text>
             </Link>
-          </Flex>
+          </Flex> */}
         </Flex>
       </Flex>
     </DefaultAuthLayout>
