@@ -1,39 +1,39 @@
 'use client';
 
 import { Center, Spinner } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect, useState } from 'react';
 import { authValidate } from 'services/auth.service';
 import _axios from 'services/axios';
-import Cookies from 'universal-cookie';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
-  const cookies = new Cookies();
+
+  const router = useRouter();
 
   const init = async () => {
-    const token = cookies.get('auth_token');
+    try {
+      const res = await authValidate();
 
-    if (token) {
-      _axios.defaults.headers['set-cookie'] = `Authorization=${token}`;
+      console.log('res', res);
+
+      setIsLoading(false);
+      router.push('/admin/default');
+    } catch (err) {
+      console.log(err);
     }
-
-    const res = await authValidate();
-
-    console.log('res', res);
-
-    setIsLoading(false);
   };
 
   useEffect(() => {
     init();
   }, []);
 
-  if (isLoading)
-    return (
-      <Center>
-        <Spinner />
-      </Center>
-    );
+  //   if (isLoading)
+  //     return (
+  //       <Center>
+  //         <Spinner />
+  //       </Center>
+  //     );
 
   return <>{children}</>;
 };

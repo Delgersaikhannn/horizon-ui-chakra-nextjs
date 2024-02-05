@@ -21,7 +21,9 @@
     "apexcharts": "^3.35.2",
     "axios": "^1.6.7",
     "framer-motion": "^4.1.17",
+    "js-cookie": "^3.0.5",
     "next": "^13.3.2",
+    "rambda": "^9.0.1",
     "react": "18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-calendar": "^3.7.0",
@@ -34,7 +36,6 @@
     "stylis": "^4.1.1",
     "stylis-plugin-rtl": "2.0.2",
     "typescript": "^4.7.4",
-    "universal-cookie": "^7.0.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -58,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^18.7.6",
     "@types/react": "18.2.0",
     "@types/react-calendar": "^3.5.2",

@@ -49,9 +49,9 @@ import { FcGoogle } from 'react-icons/fc';
 import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiEyeCloseLine } from 'react-icons/ri';
 import { login } from 'services/auth.service';
-import Cookies from 'universal-cookie';
 import { useUser } from 'contexts/appContext';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -85,13 +85,12 @@ export default function SignIn() {
   const handleClick = () => setShow(!show);
 
   const router = useRouter();
-  const cookies = new Cookies();
 
   const onSubmit = async () => {
     startLoading();
     const res = await login(formData);
 
-    cookies.set('auth_token', res?.token);
+    Cookies.set('auth_token', res?.token);
 
     const datas = {
       email: res?.email,
