@@ -38,9 +38,9 @@ export default function AdminLayout(props: DashboardLayoutProps) {
 
   useEffect(() => {
     console.log('user', user);
-    if (!user) {
-      router.push('/auth/sign-in');
-    }
+    // if (!user) {
+    //   router.push('/auth/sign-in');
+    // }
   }, [user]);
 
   return (

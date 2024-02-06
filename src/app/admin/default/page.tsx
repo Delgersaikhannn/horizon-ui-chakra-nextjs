@@ -151,12 +151,12 @@ export default function Default() {
         <TotalSpent />
         <WeeklyRevenue />
       </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap="20px" mb="20px">
         <CheckTable tableData={tableDataCheck} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
-          <DailyTraffic />
-          <PieCard />
-        </SimpleGrid>
+      </SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+        <DailyTraffic />
+        <PieCard />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap="20px" mb="20px">
         <ComplexTable tableData={tableDataComplex} />

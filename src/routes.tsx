@@ -5,6 +5,9 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
+  MdGroups,
+  MdApartment,
+  MdGrid3X3,
 } from 'react-icons/md';
 
 // Admin Imports
@@ -26,42 +29,35 @@ const routes: IRoute[] = [
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
   },
   {
-    name: 'NFT Marketplace',
+    name: 'Companies',
     layout: '/admin',
-    path: '/nft-marketplace',
-    icon: (
-      <Icon
-        as={MdOutlineShoppingCart}
-        width="20px"
-        height="20px"
-        color="inherit"
-      />
-    ),
+    path: '/companies',
+    icon: <Icon as={MdApartment} width="20px" height="20px" color="inherit" />,
     secondary: true,
   },
   {
-    name: 'Data Tables',
+    name: 'Users',
     layout: '/admin',
-    icon: <Icon as={MdBarChart} width="20px" height="20px" color="inherit" />,
-    path: '/data-tables',
+    icon: <Icon as={MdGroups} width="20px" height="20px" color="inherit" />,
+    path: '/users',
   },
+  // {
+  //   name: 'Profile',
+  //   layout: '/admin',
+  //   path: '/profile',
+  //   icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
+  // },
+  // {
+  //   name: 'Sign In',
+  //   layout: '/auth',
+  //   path: '/sign-in',
+  //   icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
+  // },
   {
-    name: 'Profile',
-    layout: '/admin',
-    path: '/profile',
-    icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
-  },
-  {
-    name: 'Sign In',
-    layout: '/auth',
-    path: '/sign-in',
-    icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
-  },
-  {
-    name: 'RTL Admin',
+    name: 'RTL Layout',
     layout: '/rtl',
     path: '/rtl-default',
-    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
+    icon: <Icon as={MdGrid3X3} width="20px" height="20px" color="inherit" />,
   },
 ];
 

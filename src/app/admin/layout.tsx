@@ -45,9 +45,9 @@ export default function AdminLayout(props: DashboardLayoutProps) {
 
   useEffect(() => {
     console.log('user', user);
-    if (!user) {
-      router.push('/auth/sign-in');
-    }
+    // if (!user) {
+    //   router.push('/auth/sign-in');
+    // }
   }, [user]);
 
   // if (user)
@@ -78,7 +78,7 @@ export default function AdminLayout(props: DashboardLayoutProps) {
             <Box>
               <Navbar
                 onOpen={onOpen}
-                logoText={'Horizon UI Dashboard PRO'}
+                logoText={'ZEV'}
                 brandText={getActiveRoute(routes)}
                 secondary={getActiveNavbar(routes)}
                 message={getActiveNavbarText(routes)}

@@ -1,83 +1,96 @@
-import { Button, Flex, Link, Text, useColorModeValue, Image } from '@chakra-ui/react';
-
-import logoWhite from 'img/layout/logoWhite.png';
+import {
+  Button,
+  Flex,
+  Link,
+  Text,
+  useColorModeValue,
+  Image,
+  HStack,
+  Avatar,
+  VStack,
+  IconButton,
+  Popover,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverFooter,
+  ButtonGroup,
+  useDisclosure,
+  PopoverTrigger,
+  Portal,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
+  ModalCloseButton,
+  ModalFooter,
+} from '@chakra-ui/react';
+import { useUser } from 'contexts/appContext';
+import { MdLogout } from 'react-icons/md';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 export default function SidebarDocs() {
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const bgColor = 'linear-gradient(135deg, #868CFF 0%, #4318FF 100%)';
-  const borderColor = useColorModeValue('white', 'navy.800');
+  const textColor = useColorModeValue('black', 'white');
+
+  const { user, updateUser } = useUser();
+  const router = useRouter();
+
+  const logout = () => {
+    Cookies.remove('auth_token');
+    updateUser(null);
+    router.push('/auth/sign-in');
+  };
 
   return (
-    <Flex
-      justify="center"
-      direction="column"
-      align="center"
-      bg={bgColor}
-      borderRadius="30px"
-      me="20px"
-      position="relative"
-    >
-      <Flex
-        border="5px solid"
-        borderColor={borderColor}
-        bg="linear-gradient(135deg, #868CFF 0%, #4318FF 100%)"
-        borderRadius="50%"
-        w="94px"
-        h="94px"
-        align="center"
-        justify="center"
-        mx="auto"
-        position="absolute"
-        left="50%"
-        top="-47px"
-        transform="translate(-50%, 0%)"
-      >
-        <Image alt="" src={logoWhite} w="40px" h="40px" />
-      </Flex>
-      <Flex
-        direction="column"
-        mb="12px"
-        align="center"
-        justify="center"
-        px="15px"
-        pt="55px"
-      >
-        <Text
-          fontSize={{ base: 'lg', xl: '18px' }}
-          color="white"
-          fontWeight="bold"
-          lineHeight="150%"
-          textAlign="center"
-          px="10px"
-          mb="14px"
+    <HStack w="100%" px="10px">
+      <HStack flexGrow={1}>
+        {/* <Avatar size="sm" /> */}
+        <VStack
+          color={textColor}
+          spacing={0}
+          alignItems="flex-start"
+          fontWeight={500}
+          lineHeight={1.2}
         >
-          Upgrade to PRO
-        </Text>
-        <Text
-          fontSize="14px"
-          color={'white'}
-          px="10px"
-          mb="14px"
-          textAlign="center"
-        >
-          Improve your development process and start doing more with Horizon UI
-          PRO!
-        </Text>
-      </Flex>
-      <Link href="https://horizon-ui.com/pro">
-        <Button
-          bg="whiteAlpha.300"
-          _hover={{ bg: 'whiteAlpha.200' }}
-          _active={{ bg: 'whiteAlpha.100' }}
-          mb={{ sm: '16px', xl: '24px' }}
-          color={'white'}
-          fontWeight="regular"
-          fontSize="sm"
-          minW="185px"
-          mx="auto"
-        >
-          Upgrade to PRO
-        </Button>
-      </Link>
-    </Flex>
+          <Text fontSize="12px" opacity={0.5}>
+            {user?.role}
+          </Text>
+          <Text noOfLines={1}>{user?.email}</Text>
+        </VStack>
+      </HStack>
+
+      <IconButton
+        icon={<MdLogout />}
+        aria-label="log-out"
+        color="red.300"
+        onClick={onOpen}
+      />
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody pt="60px">
+            <Text w="100%" textAlign="center">
+              Are you sure you want to logout?
+            </Text>
+            <ModalFooter display="flex" justifyContent="center">
+              <ButtonGroup size="sm">
+                <Button variant="outline" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="red" onClick={logout}>
+                  Logout
+                </Button>
+              </ButtonGroup>
+            </ModalFooter>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </HStack>
   );
 }
