@@ -14,9 +14,10 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
+  Image
 } from '@chakra-ui/react';
 // Custom Components
-import { Image } from 'components/image/Image';
+
 import { ItemContent } from 'components/menu/ItemContent';
 import { SearchBar } from 'components/navbar/searchBar/SearchBar';
 import { SidebarResponsive } from 'components/sidebar/Sidebar';

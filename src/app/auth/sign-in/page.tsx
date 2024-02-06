@@ -92,6 +92,8 @@ export default function SignIn() {
 
     Cookies.set('auth_token', res?.token);
 
+    console.log("token set!", res?.token)
+
     const datas = {
       email: res?.email,
       phone: res?.phone,

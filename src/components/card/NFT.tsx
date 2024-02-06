@@ -14,8 +14,8 @@ import {
 } from '@chakra-ui/react';
 // Custom components
 import Card from 'components/card/Card';
-import { NextAvatar } from 'components/image/Avatar';
-import { Image } from 'components/image/Image';
+// import { NextAvatar } from 'components/image/Avatar';
+import { Image } from "@chakra-ui/react";
 // Assets
 import { useState } from 'react';
 import { IoHeart, IoHeartOutline } from 'react-icons/io5';
@@ -100,7 +100,7 @@ export default function NFT(props: {
 								{author}
 							</Text>
 						</Flex>
-						<AvatarGroup
+						{/* <AvatarGroup
 							max={3}
 							color={textColorBid}
 							size='sm'
@@ -113,7 +113,7 @@ export default function NFT(props: {
 							}}
 							fontSize='12px'>
 							{bidders.map((avt, key) => <NextAvatar key={key} h={'32px'} w={'32px'} src={avt} />)}
-						</AvatarGroup>
+						</AvatarGroup> */}
 					</Flex>
 					<Flex
 						align={{
