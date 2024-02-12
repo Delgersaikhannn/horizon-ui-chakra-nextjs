@@ -54,7 +54,6 @@ export default function CheckTable(props: { tableData: any }) {
     console.log('res', res);
   };
 
-  let defaultData = [];
   const columns = [
     columnHelper.accessor('id', {
       id: 'id',

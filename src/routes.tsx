@@ -1,4 +1,5 @@
 import { Icon } from '@chakra-ui/react';
+import { IoMdListBox } from 'react-icons/io';
 import {
   MdBarChart,
   MdPerson,
@@ -8,6 +9,7 @@ import {
   MdGroups,
   MdApartment,
   MdGrid3X3,
+  MdList,
 } from 'react-icons/md';
 
 // Admin Imports
@@ -41,24 +43,24 @@ const routes: IRoute[] = [
     icon: <Icon as={MdGroups} width="20px" height="20px" color="inherit" />,
     path: '/users',
   },
-  // {
-  //   name: 'Profile',
-  //   layout: '/admin',
-  //   path: '/profile',
-  //   icon: <Icon as={MdPerson} width="20px" height="20px" color="inherit" />,
-  // },
-  // {
-  //   name: 'Sign In',
-  //   layout: '/auth',
-  //   path: '/sign-in',
-  //   icon: <Icon as={MdLock} width="20px" height="20px" color="inherit" />,
-  // },
   {
-    name: 'RTL Layout',
-    layout: '/rtl',
-    path: '/rtl-default',
-    icon: <Icon as={MdGrid3X3} width="20px" height="20px" color="inherit" />,
+    name: 'Resources',
+    layout: '/admin',
+    path: '/recources',
+    icon: <Icon as={IoMdListBox} width="20px" height="20px" color="inherit" />,
   },
+  {
+    name: 'Tasks',
+    layout: '/admin',
+    path: '/tasks',
+    icon: <Icon as={MdList} width="20px" height="20px" color="inherit" />,
+  },
+  // {
+  //   name: 'RTL Layout',
+  //   layout: '/rtl',
+  //   path: '/rtl-default',
+  //   icon: <Icon as={MdGrid3X3} width="20px" height="20px" color="inherit" />,
+  // },
 ];
 
 export default routes;
