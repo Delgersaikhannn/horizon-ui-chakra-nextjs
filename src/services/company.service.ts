@@ -19,4 +19,10 @@ const companyList = async (body: companyListProps) => {
   return res.data;
 };
 
-export { companyList };
+const getCompanyDetail = async (id: string) => {
+  const res = await _axios.get(`/companies/${id}`);
+
+  return res.data;
+};
+
+export { companyList, getCompanyDetail };

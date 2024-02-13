@@ -24,7 +24,9 @@ import tableDataTopCreators from 'views/admin/marketplace/variables/tableDataTop
 import { fetchUserList } from 'services/users.service';
 import MiniStatistics from 'components/card/MiniStatistics';
 import IconBox from 'components/icons/IconBox';
-import { MdPerson } from 'react-icons/md';
+import { MdApartment, MdPerson } from 'react-icons/md';
+import { companyList } from 'services/company.service';
+import CompaniesTable from './companiesTable';
 
 export type User = {
   id: string;
@@ -54,13 +56,13 @@ export default function NftMarketplace() {
   const brandColor = useColorModeValue('brand.500', 'white');
 
   const [isLoading, setIsLoading] = useState(true);
-  const [userList, setUserList] = useState<UserList>(null);
+  const [companies, setCompanies] = useState<UserList>(null);
 
-  const getUsers = async () => {
+  const getCompanies = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchUserList({});
-      setUserList(res);
+      const res = await companyList({});
+      setCompanies(res);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -68,7 +70,7 @@ export default function NftMarketplace() {
   };
 
   const init = async () => {
-    getUsers();
+    getCompanies();
   };
 
   useEffect(() => {
@@ -88,11 +90,13 @@ export default function NftMarketplace() {
               w="56px"
               h="56px"
               bg={boxBg}
-              icon={<Icon w="32px" h="32px" as={MdPerson} color={brandColor} />}
+              icon={
+                <Icon w="32px" h="32px" as={MdApartment} color={brandColor} />
+              }
             />
           }
-          name="Total Users"
-          value={userList?.pagination?.total ?? 0}
+          name="Total Companies"
+          value={companies?.pagination?.total ?? 0}
         />
       </Grid>
       <Grid
@@ -103,7 +107,7 @@ export default function NftMarketplace() {
         w="100%"
       >
         <Card px="0px" mb="20px" maxW="100%">
-          <TableTopCreators userList={userList} isLoading={isLoading} />
+          <CompaniesTable userList={companies} isLoading={isLoading} />
         </Card>
       </Grid>
       {/* Delete Product */}

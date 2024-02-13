@@ -22,6 +22,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
       setIsLoading(false);
     } catch (err) {
+      router.push('/auth/sign-in');
       setIsLoading(false);
       console.log(err);
     }
