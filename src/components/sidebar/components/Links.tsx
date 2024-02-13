@@ -1,7 +1,14 @@
 /* eslint-disable */
 
 // chakra imports
-import { Box, Flex, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Flex,
+  HStack,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import Link from 'next/link';
 import { IRoute } from 'types/navigation';
 import { usePathname } from 'next/navigation';
@@ -52,9 +59,10 @@ export function SidebarLinks(props: SidebarLinksProps) {
                   }
                   py="5px"
                   ps="10px"
+                  alignItems="center"
                 >
                   <Flex w="100%" alignItems="center" justifyContent="center">
-                    <Box
+                    <Center
                       color={
                         activeRoute(route.path.toLowerCase())
                           ? activeIcon
@@ -63,7 +71,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
                       me="18px"
                     >
                       {route.icon}
-                    </Box>
+                    </Center>
                     <Text
                       me="auto"
                       color={

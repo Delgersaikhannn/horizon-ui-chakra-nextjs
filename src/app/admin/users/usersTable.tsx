@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Input,
-  Link,
   Progress,
   Table,
   Tbody,
@@ -36,7 +35,7 @@ type TopCreatorTableProps = {
 };
 
 // const columns = columnsDataCheck;
-export default function CompaniesTable(props: TopCreatorTableProps) {
+export default function UsersTable(props: TopCreatorTableProps) {
   const { userList } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
@@ -58,11 +57,10 @@ export default function CompaniesTable(props: TopCreatorTableProps) {
       ),
       cell: (info: any) => (
         <Flex align="center">
-          <Link href={`/admin/companies/${info?.getValue()}`}>
-            <Text color={textColor} fontSize="sm" fontWeight="600">
-              {info.getValue()}
-            </Text>
-          </Link>
+          <Avatar src={info.getValue()[1]} w="30px" h="30px" me="8px" />
+          <Text color={textColor} fontSize="sm" fontWeight="600">
+            {info.getValue()}
+          </Text>
         </Flex>
       ),
     }),
@@ -84,7 +82,24 @@ export default function CompaniesTable(props: TopCreatorTableProps) {
         </Text>
       ),
     }),
-
+    columnHelper.accessor('role', {
+      id: 'role',
+      header: () => (
+        <Text
+          justifyContent="space-between"
+          align="center"
+          fontSize={{ sm: '10px', lg: '12px' }}
+          color="gray.400"
+        >
+          ROLE
+        </Text>
+      ),
+      cell: (info) => (
+        <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
+          {info.getValue()}
+        </Text>
+      ),
+    }),
     columnHelper.accessor('phone', {
       id: 'phone',
       header: () => (
@@ -103,7 +118,28 @@ export default function CompaniesTable(props: TopCreatorTableProps) {
         </Text>
       ),
     }),
-
+    columnHelper.accessor('password', {
+      id: 'password',
+      header: () => (
+        <Text
+          justifyContent="space-between"
+          align="center"
+          fontSize={{ sm: '10px', lg: '12px' }}
+          color="gray.400"
+        >
+          PASSWORD
+        </Text>
+      ),
+      cell: (info) => (
+        <Input
+          color={textColorSecondary}
+          fontSize="sm"
+          fontWeight="500"
+          value={info.getValue()}
+          type="password"
+        />
+      ),
+    }),
     columnHelper.accessor('isActive', {
       id: 'isActive',
       header: () => (
@@ -197,7 +233,7 @@ export default function CompaniesTable(props: TopCreatorTableProps) {
         boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
       >
         <Text color={textColor} fontSize="xl" fontWeight="600">
-          Companies
+          User profiles
         </Text>
       </Flex>
       <Box w="100%" overflow="auto">

@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Input,
-  Link,
   Progress,
   Table,
   Tbody,
@@ -26,152 +25,56 @@ import {
 import { User, UserList } from 'app/admin/users/page';
 // Custom components
 import * as React from 'react';
+import { Task, TaskList } from './page';
+
 // Assets
 
-const columnHelper = createColumnHelper<User>();
+const columnHelper = createColumnHelper<Task>();
 
 type TopCreatorTableProps = {
-  userList: UserList;
+  data: TaskList;
   isLoading: boolean;
 };
 
 // const columns = columnsDataCheck;
-export default function CompaniesTable(props: TopCreatorTableProps) {
-  const { userList } = props;
+export default function TasksTable(props: TopCreatorTableProps) {
+  const { data } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = useColorModeValue('secondaryGray.600', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
 
-  const columns = [
-    columnHelper.accessor('id', {
-      id: 'id',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          ID
-        </Text>
-      ),
-      cell: (info: any) => (
-        <Flex align="center">
-          <Link href={`/admin/companies/${info?.getValue()}`}>
-            <Text color={textColor} fontSize="sm" fontWeight="600">
-              {info.getValue()}
-            </Text>
-          </Link>
-        </Flex>
-      ),
-    }),
-    columnHelper.accessor('email', {
-      id: 'email',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          EMAIL
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-
-    columnHelper.accessor('phone', {
-      id: 'phone',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          PHONE
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-
-    columnHelper.accessor('isActive', {
-      id: 'isActive',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          Is Active
-        </Text>
-      ),
-      cell: (info) => (
-        <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
-          {info ? 'ACTIVE' : 'NOT ACTIVE'}
-        </Text>
-      ),
-    }),
-    columnHelper.accessor('createdAt', {
-      id: 'createdAt',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          Created at
-        </Text>
-      ),
-      cell: (info) => (
-        <Text
-          color={textColorSecondary}
-          fontSize="sm"
-          fontWeight="500"
-          opacity={0.6}
-        >
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-    columnHelper.accessor('updatedAt', {
-      id: 'updatedAt',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          Updated at
-        </Text>
-      ),
-      cell: (info) => (
-        <Text
-          color={textColorSecondary}
-          fontSize="sm"
-          fontWeight="500"
-          opacity={0.6}
-        >
-          {info.getValue()}
-        </Text>
-      ),
-    }),
-  ];
+  const col0 = data?.result[0] ?? {};
+  const columns = Object.keys(col0)?.map((el) =>
+    columnHelper.accessor(
+      //@ts-ignore
+      el,
+      {
+        id: el,
+        header: () => (
+          <Text
+            justifyContent="space-between"
+            align="center"
+            fontSize={{ sm: '10px', lg: '12px' }}
+            color="gray.400"
+          >
+            {el}
+          </Text>
+        ),
+        cell: (info: string) => (
+          <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
+            {
+              //@ts-ignore
+              info?.getValue()
+            }
+          </Text>
+        ),
+      },
+    ),
+  );
 
   const table = useReactTable({
-    data: userList?.result,
+    data: data?.result,
     columns,
     state: {
       sorting,
@@ -197,7 +100,7 @@ export default function CompaniesTable(props: TopCreatorTableProps) {
         boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
       >
         <Text color={textColor} fontSize="xl" fontWeight="600">
-          Companies
+          Scans
         </Text>
       </Flex>
       <Box w="100%" overflow="auto">
@@ -238,7 +141,7 @@ export default function CompaniesTable(props: TopCreatorTableProps) {
               ))}
             </Thead>
             <Tbody>
-              {userList?.result.length
+              {data?.result.length
                 ? table
                     .getRowModel()
                     .rows.slice(0, 11)

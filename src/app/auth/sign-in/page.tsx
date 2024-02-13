@@ -55,7 +55,7 @@ import Cookies from 'js-cookie';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
-    email: 'coordinator@zevteam.mn',
+    email: 'admin@zevteam.mn',
     password: 'testP@ss0987',
   });
   // Chakra color mode

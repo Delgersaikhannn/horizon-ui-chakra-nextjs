@@ -11,6 +11,7 @@ import {
   MdGrid3X3,
   MdList,
 } from 'react-icons/md';
+import { GoCodescan } from 'react-icons/go';
 
 // Admin Imports
 // import MainDashboard from './pages/admin/default';
@@ -44,9 +45,15 @@ const routes: IRoute[] = [
     path: '/users',
   },
   {
+    name: 'Scans',
+    layout: '/admin',
+    path: '/scans',
+    icon: <Icon as={GoCodescan} width="20px" height="20px" color="inherit" />,
+  },
+  {
     name: 'Resources',
     layout: '/admin',
-    path: '/recources',
+    path: '/resources',
     icon: <Icon as={IoMdListBox} width="20px" height="20px" color="inherit" />,
   },
   {

@@ -28,20 +28,10 @@ export default function AdminLayout(props: DashboardLayoutProps) {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   // functions for changing the states from components
   const { onOpen } = useDisclosure();
-  const { user } = useUser();
-
-  const router = useRouter();
 
   useEffect(() => {
     window.document.documentElement.dir = 'ltr';
   });
-
-  useEffect(() => {
-    console.log('user', user);
-    // if (!user) {
-    //   router.push('/auth/sign-in');
-    // }
-  }, [user]);
 
   return (
     <Box>

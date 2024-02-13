@@ -25,7 +25,9 @@ import { fetchUserList } from 'services/users.service';
 import MiniStatistics from 'components/card/MiniStatistics';
 import IconBox from 'components/icons/IconBox';
 import { MdPerson } from 'react-icons/md';
-import UsersTable from './usersTable';
+import { tasksList } from 'services/tasks.service';
+import { scansList } from 'services/scans.service';
+import TasksTable from './scansTable';
 
 export type User = {
   id: string;
@@ -60,7 +62,7 @@ export default function NftMarketplace() {
   const getUsers = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchUserList({});
+      const res = await scansList({});
       setUserList(res);
       setIsLoading(false);
     } catch (err) {
@@ -92,7 +94,7 @@ export default function NftMarketplace() {
               icon={<Icon w="32px" h="32px" as={MdPerson} color={brandColor} />}
             />
           }
-          name="Total Users"
+          name="Total Scans"
           value={userList?.pagination?.total ?? 0}
         />
       </Grid>
@@ -104,7 +106,7 @@ export default function NftMarketplace() {
         w="100%"
       >
         <Card px="0px" mb="20px" maxW="100%">
-          <UsersTable userList={userList} isLoading={isLoading} />
+          <TasksTable userList={userList} isLoading={isLoading} />
         </Card>
       </Grid>
       {/* Delete Product */}
