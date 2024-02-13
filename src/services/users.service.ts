@@ -19,4 +19,10 @@ const fetchUserList = async (body: userListProps) => {
   return res.data;
 };
 
-export { fetchUserList };
+const fetchUserDetail = async (id: string) => {
+  const res = await _axios.get(`/profiles/${id}`);
+
+  return res.data;
+};
+
+export { fetchUserList, fetchUserDetail };

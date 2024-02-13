@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Input,
-  Link,
   Progress,
   Table,
   Tbody,
@@ -24,6 +23,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { User, UserList } from 'app/admin/users/page';
+import Link from 'next/link';
 // Custom components
 import * as React from 'react';
 // Assets

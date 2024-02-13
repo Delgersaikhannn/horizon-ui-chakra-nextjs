@@ -1,8 +1,6 @@
 'use client';
 
 import {
-  Card,
-  Center,
   Divider,
   HStack,
   Text,
@@ -10,11 +8,10 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { getCompanyDetail } from 'services/company.service';
-import { resourceList } from 'services/resources.service';
-import CompanyResources from './resourcesTable';
+import { fetchUserDetail } from 'services/users.service';
+import { formatData } from 'utils/helpers';
 
-const CompanyDetail = ({ params }: { params: { id: string } }) => {
+const UserDetail = ({ params }: { params: { id: string } }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [detail, setDetail] = useState(null);
   const [resources, setResources] = useState(null);
@@ -23,10 +20,10 @@ const CompanyDetail = ({ params }: { params: { id: string } }) => {
   const bgColor = useColorModeValue('white', 'navy.800');
 
   const init = async () => {
-    const res = await getCompanyDetail(id);
+    const res = await fetchUserDetail(id);
     setDetail(res);
-    const resource = await resourceList({ companyID: id });
-    setResources(resource);
+    //   const resource = await resourceList({ companyID: id });
+    //   setResources(resource);
   };
 
   useEffect(() => {
@@ -37,24 +34,23 @@ const CompanyDetail = ({ params }: { params: { id: string } }) => {
     <VStack pt="100px" w="100%" spacing="24px">
       <VStack w="100%" bg={bgColor} borderRadius="8px" p="24px">
         <Text w="100%" fontWeight={700} fontSize="20px">
-          Company Detail
+          User Detail
         </Text>
         <Divider />
         {detail
           ? Object.keys(detail).map((el) => (
               <HStack w="100%" justifyContent="space-between" key={el}>
-                <Text fontWeight={700}>{el}</Text>
-                <Text>{detail[el]}</Text>
+                <Text>{el}</Text>
+                <Text fontWeight={700}>{formatData(detail[el])}</Text>
               </HStack>
             ))
           : null}
       </VStack>
 
-      {resources?.result?.length ? (
-        <CompanyResources data={resources} isLoading={isLoading} />
-      ) : null}
+      {/* {resources ? (
+          <CompanyResources data={resources} isLoading={isLoading} />
+        ) : null} */}
     </VStack>
   );
 };
-
-export default CompanyDetail;
+export default UserDetail;

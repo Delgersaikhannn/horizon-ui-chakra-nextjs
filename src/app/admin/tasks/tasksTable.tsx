@@ -62,7 +62,12 @@ export default function TasksTable(props: TopCreatorTableProps) {
           </Text>
         ),
         cell: (info: string) => (
-          <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
+          <Text
+            color={textColorSecondary}
+            fontSize="sm"
+            fontWeight="500"
+            minW="100px"
+          >
             {
               //@ts-ignore
               info?.getValue()

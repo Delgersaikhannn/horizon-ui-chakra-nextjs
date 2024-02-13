@@ -50,6 +50,7 @@
     "**/*.ts",
     "**/*.tsx",
     "next.config.js",
+    "_next/types/**/*.ts",
     ".next/types/**/*.ts"
   ]
 }

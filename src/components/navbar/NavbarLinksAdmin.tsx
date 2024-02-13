@@ -14,7 +14,7 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
-  Image
+  Image,
 } from '@chakra-ui/react';
 // Custom Components
 
@@ -27,6 +27,7 @@ import { FaEthereum } from 'react-icons/fa';
 import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 import { MdInfoOutline, MdNotificationsNone } from 'react-icons/md';
 import routes from 'routes';
+import { useUser } from 'contexts/appContext';
 export default function HeaderLinks(props: { secondary: boolean }) {
   const { secondary } = props;
   const { colorMode, toggleColorMode } = useColorMode();
@@ -44,6 +45,8 @@ export default function HeaderLinks(props: { secondary: boolean }) {
     '14px 17px 40px 4px rgba(112, 144, 176, 0.06)',
   );
   const borderButton = useColorModeValue('secondaryGray.500', 'whiteAlpha.200');
+
+  const { user } = useUser();
 
   return (
     <Flex
@@ -145,7 +148,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               borderRadius="8px"
               mb="10px"
             >
-              <ItemContent info="Horizon UI Dashboard PRO" />
+              <ItemContent info="Someone added you to 'Zevteam'." />
             </MenuItem>
             <MenuItem
               _hover={{ bg: 'none' }}
@@ -154,7 +157,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               borderRadius="8px"
               mb="10px"
             >
-              <ItemContent info="Horizon Design System Free" />
+              <ItemContent info="New version of Zev admin now available" />
             </MenuItem>
           </Flex>
         </MenuList>
@@ -251,8 +254,13 @@ export default function HeaderLinks(props: { secondary: boolean }) {
             borderRadius={'50%'}
           />
           <Center top={0} left={0} position={'absolute'} w={'100%'} h={'100%'}>
-            <Text fontSize={'xs'} fontWeight="bold" color={'white'}>
-              AP
+            <Text
+              fontSize={'xs'}
+              fontWeight="bold"
+              color={'white'}
+              textTransform="uppercase"
+            >
+              {user?.email?.[0]}
             </Text>
           </Center>
         </MenuButton>
@@ -276,7 +284,7 @@ export default function HeaderLinks(props: { secondary: boolean }) {
               fontWeight="700"
               color={textColor}
             >
-              👋&nbsp; Hey, Adela
+              👋&nbsp; {user?.email}
             </Text>
           </Flex>
           <Flex flexDirection="column" p="10px">

@@ -28,25 +28,24 @@ import { MdPerson } from 'react-icons/md';
 import { tasksList } from 'services/tasks.service';
 import { scansList } from 'services/scans.service';
 import TasksTable from './scansTable';
+import ScanSeverities from './scanSeverities';
 
-export type User = {
-  id: string;
+export type Scan = {
   createdAt: string;
-  email: string;
-  isActive: boolean;
-  password: string;
-  phone: string;
-  role: string;
+  id: string;
+  resourceName: string;
+  resourceType: string;
+  riskScore: number;
   updatedAt: string;
 };
 
-export type UserList = {
+export type ScanList = {
   pagination: {
     page: number;
     pageby: number;
     total: number;
   };
-  result: Array<User>;
+  result: Array<Scan>;
 } | null;
 
 export default function NftMarketplace() {
@@ -57,13 +56,13 @@ export default function NftMarketplace() {
   const brandColor = useColorModeValue('brand.500', 'white');
 
   const [isLoading, setIsLoading] = useState(true);
-  const [userList, setUserList] = useState<UserList>(null);
+  const [scanList, setScanList] = useState<ScanList>(null);
 
   const getUsers = async () => {
     try {
       setIsLoading(true);
       const res = await scansList({});
-      setUserList(res);
+      setScanList(res);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -95,9 +94,10 @@ export default function NftMarketplace() {
             />
           }
           name="Total Scans"
-          value={userList?.pagination?.total ?? 0}
+          value={scanList?.pagination?.total ?? 0}
         />
       </Grid>
+      <ScanSeverities data={scanList?.result} />
       <Grid
         mb="20px"
         gridTemplateColumns={{ xl: 'repeat(1fr)', '2xl': '1fr' }}
@@ -106,7 +106,7 @@ export default function NftMarketplace() {
         w="100%"
       >
         <Card px="0px" mb="20px" maxW="100%">
-          <TasksTable userList={userList} isLoading={isLoading} />
+          <TasksTable data={scanList} isLoading={isLoading} />
         </Card>
       </Grid>
       {/* Delete Product */}

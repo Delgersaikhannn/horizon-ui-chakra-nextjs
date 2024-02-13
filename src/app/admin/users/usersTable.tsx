@@ -23,8 +23,10 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { User, UserList } from 'app/admin/users/page';
+import { Paginator } from 'components/paginator';
 // Custom components
 import * as React from 'react';
+import Link from 'next/link';
 // Assets
 
 const columnHelper = createColumnHelper<User>();
@@ -56,12 +58,14 @@ export default function UsersTable(props: TopCreatorTableProps) {
         </Text>
       ),
       cell: (info: any) => (
-        <Flex align="center">
-          <Avatar src={info.getValue()[1]} w="30px" h="30px" me="8px" />
-          <Text color={textColor} fontSize="sm" fontWeight="600">
-            {info.getValue()}
-          </Text>
-        </Flex>
+        <Link href={`/admin/users/${info?.getValue()}`}>
+          <Flex align="center">
+            <Avatar src={info.getValue()[1]} w="30px" h="30px" me="8px" />
+            <Text color={textColor} fontSize="sm" fontWeight="600">
+              {info?.getValue()}
+            </Text>
+          </Flex>
+        </Link>
       ),
     }),
     columnHelper.accessor('email', {
@@ -235,6 +239,7 @@ export default function UsersTable(props: TopCreatorTableProps) {
         <Text color={textColor} fontSize="xl" fontWeight="600">
           User profiles
         </Text>
+        <Paginator {...userList?.pagination} />
       </Flex>
       <Box w="100%" overflow="auto">
         <Box>

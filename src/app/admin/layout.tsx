@@ -12,7 +12,7 @@ import Navbar from 'components/navbar/NavbarAdmin';
 import Sidebar from 'components/sidebar/Sidebar';
 import { SidebarContext } from 'contexts/SidebarContext';
 import { useUser } from 'contexts/appContext';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import routes from 'routes';
 import {
@@ -42,6 +42,7 @@ export default function AdminLayout(props: DashboardLayoutProps) {
   const { user } = useUser();
 
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     console.log('user', user);
@@ -77,11 +78,12 @@ export default function AdminLayout(props: DashboardLayoutProps) {
           <Portal>
             <Box>
               <Navbar
+                // key={pathname}
                 onOpen={onOpen}
                 logoText={'ZEV'}
-                brandText={getActiveRoute(routes)}
-                secondary={getActiveNavbar(routes)}
-                message={getActiveNavbarText(routes)}
+                brandText={getActiveRoute(routes, pathname)}
+                secondary={getActiveNavbar(routes, pathname)}
+                message={getActiveNavbarText(routes, pathname)}
                 fixed={fixed}
                 {...rest}
               />

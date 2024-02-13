@@ -6,7 +6,7 @@ import Navbar from 'components/navbar/NavbarAdmin';
 import Sidebar from 'components/sidebar/Sidebar';
 import { SidebarContext } from 'contexts/SidebarContext';
 import { useUser } from 'contexts/appContext';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { PropsWithChildren, useEffect, useState } from 'react';
 import routes from 'routes';
 import {
@@ -26,6 +26,8 @@ export default function AdminLayout(props: DashboardLayoutProps) {
   // states and functions
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
+
+  const pathname = usePathname();
   // functions for changing the states from components
   const { onOpen } = useDisclosure();
 
@@ -61,9 +63,9 @@ export default function AdminLayout(props: DashboardLayoutProps) {
               <Navbar
                 onOpen={onOpen}
                 logoText={'Horizon UI Dashboard PRO'}
-                brandText={getActiveRoute(routes)}
-                secondary={getActiveNavbar(routes)}
-                message={getActiveNavbarText(routes)}
+                brandText={getActiveRoute(routes, pathname)}
+                secondary={getActiveNavbar(routes, pathname)}
+                message={getActiveNavbarText(routes, pathname)}
                 fixed={fixed}
                 {...rest}
               />

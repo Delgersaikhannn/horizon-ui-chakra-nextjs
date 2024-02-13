@@ -28,7 +28,7 @@ import { MdApartment, MdPerson } from 'react-icons/md';
 import { companyList } from 'services/company.service';
 import CompaniesTable from './companiesTable';
 
-export type User = {
+export type Company = {
   id: string;
   createdAt: string;
   email: string;
@@ -39,13 +39,13 @@ export type User = {
   updatedAt: string;
 };
 
-export type UserList = {
+export type CompanyList = {
   pagination: {
     page: number;
     pageby: number;
     total: number;
   };
-  result: Array<User>;
+  result: Array<Company>;
 } | null;
 
 export default function NftMarketplace() {
@@ -56,7 +56,7 @@ export default function NftMarketplace() {
   const brandColor = useColorModeValue('brand.500', 'white');
 
   const [isLoading, setIsLoading] = useState(true);
-  const [companies, setCompanies] = useState<UserList>(null);
+  const [companies, setCompanies] = useState<CompanyList>(null);
 
   const getCompanies = async () => {
     try {

@@ -43,6 +43,7 @@ const routes: IRoute[] = [
     layout: '/admin',
     icon: <Icon as={MdGroups} width="20px" height="20px" color="inherit" />,
     path: '/users',
+    secondary: true,
   },
   {
     name: 'Scans',
