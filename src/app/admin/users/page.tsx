@@ -55,12 +55,13 @@ export default function NftMarketplace() {
   const brandColor = useColorModeValue('brand.500', 'white');
 
   const [isLoading, setIsLoading] = useState(true);
+  const [pagination, setPagination] = useState({ page: 1, pageby: 25 });
   const [userList, setUserList] = useState<UserList>(null);
 
   const getUsers = async () => {
     try {
       setIsLoading(true);
-      const res = await fetchUserList({});
+      const res = await fetchUserList(pagination);
       setUserList(res);
       setIsLoading(false);
     } catch (err) {
@@ -72,9 +73,11 @@ export default function NftMarketplace() {
     getUsers();
   };
 
+  const props = { pagination, setPagination };
+
   useEffect(() => {
     init();
-  }, []);
+  }, [pagination]);
 
   return (
     <VStack
@@ -104,7 +107,7 @@ export default function NftMarketplace() {
         w="100%"
       >
         <Card px="0px" mb="20px" maxW="100%">
-          <UsersTable userList={userList} isLoading={isLoading} />
+          <UsersTable userList={userList} isLoading={isLoading} {...props} />
         </Card>
       </Grid>
       {/* Delete Product */}

@@ -25,4 +25,9 @@ const fetchUserDetail = async (id: string) => {
   return res.data;
 };
 
-export { fetchUserList, fetchUserDetail };
+const updateUser = async (id: string, body: { phone: string }) => {
+  const res = await _axios.patch(`/profiles/${id}`, body);
+
+  return res.data;
+};
+export { fetchUserList, fetchUserDetail, updateUser };

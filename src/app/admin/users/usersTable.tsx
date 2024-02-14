@@ -2,9 +2,11 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   Flex,
   Input,
   Progress,
+  Spinner,
   Table,
   Tbody,
   Td,
@@ -34,16 +36,24 @@ const columnHelper = createColumnHelper<User>();
 type TopCreatorTableProps = {
   userList: UserList;
   isLoading: boolean;
+  pagination: { page: number; pageby: number };
+  setPagination: React.Dispatch<
+    React.SetStateAction<{ page: number; pageby: number }>
+  >;
 };
 
 // const columns = columnsDataCheck;
 export default function UsersTable(props: TopCreatorTableProps) {
-  const { userList } = props;
+  const { userList, pagination, setPagination, isLoading } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = useColorModeValue('secondaryGray.600', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
 
+  const paginatorProps = {
+    pagination,
+    setPagination,
+  };
   const columns = [
     columnHelper.accessor('id', {
       id: 'id',
@@ -221,6 +231,12 @@ export default function UsersTable(props: TopCreatorTableProps) {
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
+  if (isLoading)
+    return (
+      <Center w="100%" minH="300px">
+        <Spinner />
+      </Center>
+    );
   return (
     <Flex
       direction="column"
@@ -239,7 +255,10 @@ export default function UsersTable(props: TopCreatorTableProps) {
         <Text color={textColor} fontSize="xl" fontWeight="600">
           User profiles
         </Text>
-        <Paginator {...userList?.pagination} />
+        <Paginator
+          total={userList?.pagination?.total ?? 0}
+          {...paginatorProps}
+        />
       </Flex>
       <Box w="100%" overflow="auto">
         <Box>
