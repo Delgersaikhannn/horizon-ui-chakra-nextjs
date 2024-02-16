@@ -25,9 +25,9 @@ export const FormInput = ({
       <Text>{label}</Text>
       <Input
         placeholder={label}
-        {...(register(name), { required: isRequired })}
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         color={textColor}
+        {...register(name, { required: isRequired })}
       />
     </VStack>
   );

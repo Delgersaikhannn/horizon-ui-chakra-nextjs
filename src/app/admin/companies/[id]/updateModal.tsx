@@ -46,7 +46,13 @@ const formInputs = [
   },
 ];
 
-type UserFormType = { phone: string };
+type UserFormType = {
+  phone: string;
+  email: string;
+  name: string;
+  web: string;
+  address: string;
+};
 
 type CompanyUpdateModalProps = {
   isOpen: boolean;
@@ -64,8 +70,9 @@ const CompanyUpdateModal = ({
 
   const onSubmit: SubmitHandler<UserFormType> = async (values: any) => {
     try {
+      // console.log('values', values);
+      // return;
       setIsLoading(true);
-      console.log('values', values);
       const res = await updateCompany(defaultValue?.id, values);
       onSuccess && (await onSuccess());
       setIsLoading(false);
@@ -87,6 +94,10 @@ const CompanyUpdateModal = ({
   useEffect(() => {
     if (defaultValue) {
       setValue('phone', defaultValue?.phone);
+      setValue('web', defaultValue?.web);
+      setValue('address', defaultValue?.address);
+      setValue('email', defaultValue?.email);
+      setValue('name', defaultValue?.name);
     }
   }, [defaultValue]);
 
