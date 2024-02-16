@@ -1,4 +1,10 @@
-import { Input, Text, VStack, useColorModeValue } from '@chakra-ui/react';
+import {
+  Collapse,
+  Input,
+  Text,
+  VStack,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 type FormInputProps = {
   label: string;
@@ -13,7 +19,7 @@ type FormInputProps = {
 export const FormInput = ({
   label,
   name,
-  error,
+  error = {},
   type,
   isRequired,
   register,
@@ -27,8 +33,14 @@ export const FormInput = ({
         placeholder={label}
         // defaultValue={defaultValue}
         color={textColor}
+        type={type}
         {...register(name, { required: isRequired })}
       />
+      <Collapse in={error ? true : false} style={{ width: '100%' }}>
+        <Text color="red.300" fontSize="12px">
+          {error?.type}
+        </Text>
+      </Collapse>
     </VStack>
   );
 };

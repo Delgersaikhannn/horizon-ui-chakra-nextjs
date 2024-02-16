@@ -30,4 +30,14 @@ const updateUser = async (id: string, body: { phone: string }) => {
 
   return res.data;
 };
-export { fetchUserList, fetchUserDetail, updateUser };
+
+const createUser = async (body: {
+  phone: string;
+  password: string;
+  email: string;
+}) => {
+  const res = await _axios.post(`/profiles`, body);
+
+  return res.data;
+};
+export { fetchUserList, fetchUserDetail, updateUser, createUser };

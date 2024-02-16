@@ -26,6 +26,7 @@ import MiniStatistics from 'components/card/MiniStatistics';
 import IconBox from 'components/icons/IconBox';
 import { MdPerson } from 'react-icons/md';
 import UsersTable from './usersTable';
+import UserCreateModal from './createUser';
 
 export type User = {
   id: string;
@@ -85,7 +86,7 @@ export default function NftMarketplace() {
       w="100%"
       spacing="24px"
     >
-      <Grid w="100%" gridTemplateColumns={{ xl: 'repeat(4, 1fr)' }}>
+      <Grid w="100%" gridTemplateColumns={{ xl: 'repeat(4, 1fr)' }} gap="24px">
         <MiniStatistics
           startContent={
             <IconBox
@@ -98,6 +99,7 @@ export default function NftMarketplace() {
           name="Total Users"
           value={userList?.pagination?.total ?? 0}
         />
+        <UserCreateModal onSuccess={getUsers} />
       </Grid>
       <Grid
         mb="20px"
