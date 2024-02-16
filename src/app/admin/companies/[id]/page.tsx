@@ -5,17 +5,22 @@ import {
   Center,
   Divider,
   HStack,
+  IconButton,
   Text,
   VStack,
   useColorModeValue,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getCompanyDetail } from 'services/company.service';
 import { resourceList } from 'services/resources.service';
 import CompanyResources from './resourcesTable';
+import CompanyUpdateModal from './updateModal';
+import { MdEdit } from 'react-icons/md';
 
 const CompanyDetail = ({ params }: { params: { id: string } }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [detail, setDetail] = useState(null);
   const [resources, setResources] = useState(null);
   const id = params.id;
@@ -35,10 +40,13 @@ const CompanyDetail = ({ params }: { params: { id: string } }) => {
 
   return (
     <VStack pt="100px" w="100%" spacing="24px">
-      <VStack w="100%" bg={bgColor} borderRadius="8px" p="24px">
-        <Text w="100%" fontWeight={700} fontSize="20px">
-          Company Detail
-        </Text>
+      <VStack w="100%" bg={bgColor} borderRadius="8px" p="24px" spacing="12px">
+        <HStack w="100%" justifyContent="space-between">
+          <Text w="100%" fontWeight={700} fontSize="20px">
+            Company Detail
+          </Text>
+          <IconButton icon={<MdEdit />} aria-label="edit" onClick={onOpen} />
+        </HStack>
         <Divider />
         {detail
           ? Object.keys(detail).map((el) => (
@@ -53,6 +61,12 @@ const CompanyDetail = ({ params }: { params: { id: string } }) => {
       {resources?.result?.length ? (
         <CompanyResources data={resources} isLoading={isLoading} />
       ) : null}
+      <CompanyUpdateModal
+        isOpen={isOpen}
+        onClose={onClose}
+        defaultValue={detail}
+        onSuccess={init}
+      />
     </VStack>
   );
 };

@@ -25,4 +25,19 @@ const getCompanyDetail = async (id: string) => {
   return res.data;
 };
 
-export { companyList, getCompanyDetail };
+const updateCompany = async (
+  id: string,
+  body: {
+    email?: string;
+    address?: string;
+    name?: string;
+    phone?: string;
+    web?: string;
+  },
+) => {
+  const res = await _axios.patch(`/companies/${id}`, body);
+
+  return res.data;
+};
+
+export { companyList, getCompanyDetail, updateCompany };
