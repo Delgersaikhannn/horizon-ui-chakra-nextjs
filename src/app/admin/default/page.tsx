@@ -37,9 +37,12 @@ import MiniStatistics from 'components/card/MiniStatistics';
 import IconBox from 'components/icons/IconBox';
 import {
   MdAddTask,
+  MdApartment,
   MdAttachMoney,
   MdBarChart,
   MdFileCopy,
+  MdGroup,
+  MdRadar,
 } from 'react-icons/md';
 import CheckTable from 'views/admin/default/components/CheckTable';
 import ComplexTable from 'views/admin/default/components/ComplexTable';
@@ -52,12 +55,38 @@ import tableDataCheck from 'views/admin/default/variables/tableDataCheck';
 import tableDataComplex from 'views/admin/default/variables/tableDataComplex';
 // Assets
 import Usa from 'img/dashboards/usa.png';
+import { useEffect, useState } from 'react';
+import { getReport } from 'services/app.service';
+
+type StatsType = {
+  company: number;
+  resource: number;
+  scan: number;
+  task: number;
+  user: number;
+} | null;
 
 export default function Default() {
   // Chakra Color Mode
 
   const brandColor = useColorModeValue('brand.500', 'white');
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
+
+  const [stats, setStats] = useState<StatsType>(null);
+
+  const init = async () => {
+    try {
+      const res = await getReport();
+      setStats(res);
+      console.log('stat', res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    init();
+  }, []);
 
   return (
     <Box pt={{ base: '130px', md: '80px', xl: '80px' }}>
@@ -72,13 +101,11 @@ export default function Default() {
               w="56px"
               h="56px"
               bg={boxBg}
-              icon={
-                <Icon w="32px" h="32px" as={MdBarChart} color={brandColor} />
-              }
+              icon={<Icon w="32px" h="32px" as={MdGroup} color={brandColor} />}
             />
           }
-          name="Earnings"
-          value="$350.4"
+          name="Total Users"
+          value={stats?.user ?? 0}
         />
         <MiniStatistics
           startContent={
@@ -87,15 +114,32 @@ export default function Default() {
               h="56px"
               bg={boxBg}
               icon={
-                <Icon w="32px" h="32px" as={MdAttachMoney} color={brandColor} />
+                <Icon w="32px" h="32px" as={MdApartment} color={brandColor} />
               }
             />
           }
-          name="Spend this month"
-          value="$642.39"
+          name="Total Companies"
+          value={stats?.company ?? 0}
         />
-        <MiniStatistics growth="+23%" name="Sales" value="$574.34" />
         <MiniStatistics
+          startContent={
+            <IconBox
+              w="56px"
+              h="56px"
+              bg={boxBg}
+              icon={<Icon w="32px" h="32px" as={MdRadar} color={brandColor} />}
+            />
+          }
+          name="Total Scans"
+          value={stats?.scan ?? 0}
+        />
+
+        {/* <MiniStatistics
+          growth="+0%"
+          name="Total Scans"
+          value={stats?.scan ?? 0}
+        /> */}
+        {/* <MiniStatistics
           endContent={
             <Flex me="-16px" mt="10px">
               <FormLabel htmlFor="balance">
@@ -118,7 +162,7 @@ export default function Default() {
           }
           name="Your balance"
           value="$1,000"
-        />
+        /> */}
         <MiniStatistics
           startContent={
             <IconBox
@@ -128,8 +172,8 @@ export default function Default() {
               icon={<Icon w="28px" h="28px" as={MdAddTask} color="white" />}
             />
           }
-          name="New Tasks"
-          value="154"
+          name="Total Taks"
+          value={stats?.task ?? 0}
         />
         <MiniStatistics
           startContent={
@@ -142,8 +186,8 @@ export default function Default() {
               }
             />
           }
-          name="Total Projects"
-          value="2935"
+          name="Total Resources"
+          value={stats?.resource ?? 0}
         />
       </SimpleGrid>
 
