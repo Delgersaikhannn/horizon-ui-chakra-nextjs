@@ -6,21 +6,26 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   Flex,
-  Link,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import AdminNavbarLinks from 'components/navbar/NavbarLinksAdmin';
 import { isWindowAvailable } from 'utils/navigation';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
-export default function AdminNavbar(props: {
+export function AdminNavbar(props: {
   secondary: boolean;
   message: string | boolean;
   brandText: string;
   logoText: string;
   fixed: boolean;
   onOpen: any;
+  path: {
+    path: string;
+    layout: string;
+  };
 }) {
   const [scrolled, setScrolled] = useState(false);
 
@@ -35,7 +40,8 @@ export default function AdminNavbar(props: {
     }
   });
 
-  const { secondary, message, brandText, onOpen } = props;
+  const { secondary, message, brandText, onOpen, path } = props;
+  const params = useParams();
 
   // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
   let mainText = useColorModeValue('navy.700', 'white');
@@ -59,6 +65,8 @@ export default function AdminNavbar(props: {
       setScrolled(false);
     }
   };
+
+  const id = params?.id ?? null;
 
   return (
     <Box
@@ -115,35 +123,38 @@ export default function AdminNavbar(props: {
         <Box mb={{ sm: '8px', md: '0px' }}>
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
-              <BreadcrumbLink href="#" color={secondaryText}>
+              <BreadcrumbLink
+                href="/admin/default"
+                color={secondaryText}
+                as={Link}
+              >
                 Pages
               </BreadcrumbLink>
             </BreadcrumbItem>
 
             <BreadcrumbItem color={secondaryText} fontSize="sm">
-              <BreadcrumbLink href="#" color={secondaryText}>
+              <BreadcrumbLink
+                href={path?.layout + path?.path}
+                color={secondaryText}
+                as={Link}
+              >
                 {brandText}
               </BreadcrumbLink>
             </BreadcrumbItem>
+            {id ? (
+              <BreadcrumbItem color={secondaryText} fontSize="sm">
+                <BreadcrumbLink
+                  href={`${path?.layout}${path?.path}/${id}`}
+                  color={secondaryText}
+                  as={Link}
+                >
+                  {id}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            ) : null}
           </Breadcrumb>
           {/* Here we create navbar brand, based on route name */}
-          <Link
-            color={mainText}
-            href="#"
-            bg="inherit"
-            borderRadius="inherit"
-            fontWeight="bold"
-            fontSize="34px"
-            _hover={{ color: { mainText } }}
-            _active={{
-              bg: 'inherit',
-              transform: 'none',
-              borderColor: 'transparent',
-            }}
-            _focus={{
-              boxShadow: 'none',
-            }}
-          >
+          <Link color={mainText} href="#">
             {brandText}
           </Link>
         </Box>

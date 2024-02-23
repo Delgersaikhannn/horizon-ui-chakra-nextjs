@@ -7,8 +7,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import Footer from 'components/footer/FooterAdmin';
+import { AdminNavbar } from 'components/navbar/NavbarAdmin';
 // Layout components
-import Navbar from 'components/navbar/NavbarAdmin';
 import Sidebar from 'components/sidebar/Sidebar';
 import { SidebarContext } from 'contexts/SidebarContext';
 import { useUser } from 'contexts/appContext';
@@ -18,6 +18,7 @@ import routes from 'routes';
 import {
   getActiveNavbar,
   getActiveNavbarText,
+  getActivePath,
   getActiveRoute,
 } from 'utils/navigation';
 
@@ -77,13 +78,14 @@ export default function AdminLayout(props: DashboardLayoutProps) {
         >
           <Portal>
             <Box>
-              <Navbar
+              <AdminNavbar
                 // key={pathname}
                 onOpen={onOpen}
                 logoText={'ZEV'}
                 brandText={getActiveRoute(routes, pathname)}
                 secondary={getActiveNavbar(routes, pathname)}
                 message={getActiveNavbarText(routes, pathname)}
+                path={getActivePath(routes, pathname)}
                 fixed={fixed}
                 {...rest}
               />

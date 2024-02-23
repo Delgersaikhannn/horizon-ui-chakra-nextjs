@@ -15,6 +15,7 @@ import {
   useColorMode,
   useColorModeValue,
   Image,
+  VStack,
 } from '@chakra-ui/react';
 // Custom Components
 
@@ -28,7 +29,11 @@ import { IoMdMoon, IoMdSunny } from 'react-icons/io';
 import { MdInfoOutline, MdNotificationsNone } from 'react-icons/md';
 import routes from 'routes';
 import { useUser } from 'contexts/appContext';
-export default function HeaderLinks(props: { secondary: boolean }) {
+import LogoutWrapper from 'components/sidebar/components/SidebarCard';
+export default function HeaderLinks(props: {
+  secondary: boolean;
+  path: string;
+}) {
   const { secondary } = props;
   const { colorMode, toggleColorMode } = useColorMode();
   // Chakra Color Mode
@@ -272,21 +277,35 @@ export default function HeaderLinks(props: { secondary: boolean }) {
           bg={menuBg}
           border="none"
         >
-          <Flex w="100%" mb="0px">
+          <VStack
+            w="100%"
+            mb="0px"
+            ps="20px"
+            spacing={0}
+            pt="16px"
+            pb="10px"
+            borderBottom="1px solid"
+            borderColor={borderColor}
+          >
             <Text
-              ps="20px"
-              pt="16px"
+              w="100%"
+              fontSize="sm"
+              fontWeight="700"
+              color={textColor}
+              opacity={0.5}
+            >
+              {user?.role}
+            </Text>
+            <Text
               pb="10px"
               w="100%"
-              borderBottom="1px solid"
-              borderColor={borderColor}
               fontSize="sm"
               fontWeight="700"
               color={textColor}
             >
               👋&nbsp; {user?.email}
             </Text>
-          </Flex>
+          </VStack>
           <Flex flexDirection="column" p="10px">
             <MenuItem
               _hover={{ bg: 'none' }}
@@ -296,23 +315,18 @@ export default function HeaderLinks(props: { secondary: boolean }) {
             >
               <Text fontSize="sm">Profile Settings</Text>
             </MenuItem>
-            <MenuItem
-              _hover={{ bg: 'none' }}
-              _focus={{ bg: 'none' }}
-              borderRadius="8px"
-              px="14px"
-            >
-              <Text fontSize="sm">Newsletter Settings</Text>
-            </MenuItem>
-            <MenuItem
-              _hover={{ bg: 'none' }}
-              _focus={{ bg: 'none' }}
-              color="red.400"
-              borderRadius="8px"
-              px="14px"
-            >
-              <Text fontSize="sm">Log out</Text>
-            </MenuItem>
+
+            <LogoutWrapper>
+              <MenuItem
+                _hover={{ bg: 'none' }}
+                _focus={{ bg: 'none' }}
+                color="red.400"
+                borderRadius="8px"
+                px="14px"
+              >
+                <Text fontSize="sm">Log out</Text>
+              </MenuItem>
+            </LogoutWrapper>
           </Flex>
         </MenuList>
       </Menu>

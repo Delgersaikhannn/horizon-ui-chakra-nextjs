@@ -12,4 +12,10 @@ const authValidate = async () => {
   return res.data;
 };
 
-export { login, authValidate };
+const logoutService = async () => {
+  const res = await _axios.get('/logout');
+
+  return res.data;
+};
+
+export { login, authValidate, logoutService };

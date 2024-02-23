@@ -25,13 +25,17 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalFooter,
+  Box,
 } from '@chakra-ui/react';
 import { useUser } from 'contexts/appContext';
 import { MdLogout } from 'react-icons/md';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import { logoutService } from 'services/auth.service';
+import { PropsWithChildren, useState } from 'react';
 
-export default function SidebarDocs() {
+export default function LogoutWrapper({ children }: PropsWithChildren) {
+  const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const bgColor = 'linear-gradient(135deg, #868CFF 0%, #4318FF 100%)';
   const textColor = useColorModeValue('black', 'white');
@@ -39,36 +43,22 @@ export default function SidebarDocs() {
   const { user, updateUser } = useUser();
   const router = useRouter();
 
-  const logout = () => {
-    Cookies.remove('auth_token');
-    updateUser(null);
-    router.push('/auth/sign-in');
+  const logout = async () => {
+    try {
+      setIsLoading(true);
+      await logoutService();
+    } catch (err) {
+    } finally {
+      setIsLoading(false);
+      Cookies.remove('auth_token');
+      updateUser(null);
+      router.push('/auth/sign-in');
+    }
   };
 
   return (
-    <HStack w="100%" px="10px">
-      <HStack flexGrow={1}>
-        {/* <Avatar size="sm" /> */}
-        <VStack
-          color={textColor}
-          spacing={0}
-          alignItems="flex-start"
-          fontWeight={500}
-          lineHeight={1.2}
-        >
-          <Text fontSize="12px" opacity={0.5}>
-            {user?.role}
-          </Text>
-          <Text noOfLines={1}>{user?.email}</Text>
-        </VStack>
-      </HStack>
-
-      <IconButton
-        icon={<MdLogout />}
-        aria-label="log-out"
-        color="red.300"
-        onClick={onOpen}
-      />
+    <>
+      <Box onClick={onOpen}>{children}</Box>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
@@ -83,7 +73,11 @@ export default function SidebarDocs() {
                 <Button variant="outline" onClick={onClose}>
                   Cancel
                 </Button>
-                <Button colorScheme="red" onClick={logout}>
+                <Button
+                  colorScheme="red"
+                  onClick={logout}
+                  isLoading={isLoading}
+                >
                   Logout
                 </Button>
               </ButtonGroup>
@@ -91,6 +85,6 @@ export default function SidebarDocs() {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </HStack>
+    </>
   );
 }

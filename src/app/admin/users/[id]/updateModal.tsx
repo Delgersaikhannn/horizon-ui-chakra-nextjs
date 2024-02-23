@@ -6,6 +6,7 @@ import {
   ModalContent,
   ModalOverlay,
   VStack,
+  useToast,
 } from '@chakra-ui/react';
 import { FormInput } from 'components/formInput';
 import { useEffect, useState } from 'react';
@@ -37,6 +38,8 @@ const UserUpdateModal = ({
 }: UserUpdateModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const toast = useToast();
+
   const onSubmit: SubmitHandler<UserFormType> = async (values: any) => {
     try {
       setIsLoading(true);
@@ -45,8 +48,9 @@ const UserUpdateModal = ({
       onSuccess && (await onSuccess());
       setIsLoading(false);
       onClose();
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      toast({ status: 'error', description: err?.response?.data ?? '' });
       setIsLoading(false);
     }
   };

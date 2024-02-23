@@ -22,6 +22,16 @@ export const getActiveRoute = (routes: IRoute[], pathname: string): string => {
   return route?.name || 'Default Brand Text';
 };
 
+export const getActivePath = (
+  routes: IRoute[],
+  pathname: string,
+): { path: string; layout: string } => {
+  const route = findCurrentRoute(routes, pathname);
+  const obj = { path: route?.path ?? '/', layout: route?.layout };
+
+  return obj;
+};
+
 export const getActiveNavbar = (
   routes: IRoute[],
   pathname: string,

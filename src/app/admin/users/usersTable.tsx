@@ -55,30 +55,7 @@ export default function UsersTable(props: TopCreatorTableProps) {
     setPagination,
   };
   const columns = [
-    columnHelper.accessor('id', {
-      id: 'id',
-      header: () => (
-        <Text
-          justifyContent="space-between"
-          align="center"
-          fontSize={{ sm: '10px', lg: '12px' }}
-          color="gray.400"
-        >
-          ID
-        </Text>
-      ),
-      cell: (info: any) => (
-        <Link href={`/admin/users/${info?.getValue()}`}>
-          <Flex align="center">
-            <Avatar src={info.getValue()[1]} w="30px" h="30px" me="8px" />
-            <Text color={textColor} fontSize="sm" fontWeight="600">
-              {info?.getValue()}
-            </Text>
-          </Flex>
-        </Link>
-      ),
-    }),
-    columnHelper.accessor('email', {
+    columnHelper.accessor((row) => row?.email, {
       id: 'email',
       header: () => (
         <Text
@@ -91,9 +68,20 @@ export default function UsersTable(props: TopCreatorTableProps) {
         </Text>
       ),
       cell: (info) => (
-        <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
-          {info.getValue()}
-        </Text>
+        <Link
+          href={`/admin/users/${
+            userList?.result ? userList?.result[info.row.index].id : ''
+          }`}
+        >
+          <Text
+            color={textColor}
+            fontSize="sm"
+            fontWeight="600"
+            onClick={() => console.log(info)}
+          >
+            {info?.getValue()}
+          </Text>
+        </Link>
       ),
     }),
     columnHelper.accessor('role', {
