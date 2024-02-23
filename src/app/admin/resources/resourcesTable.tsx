@@ -26,6 +26,7 @@ import { User, UserList } from 'app/admin/users/page';
 // Custom components
 import * as React from 'react';
 import { Resource, ResoureList } from './page';
+import Link from 'next/link';
 // Assets
 
 const columnHelper = createColumnHelper<Resource>();
@@ -60,14 +61,28 @@ export default function ResourcesTable(props: TopCreatorTableProps) {
             {el}
           </Text>
         ),
-        cell: (info: string) => (
-          <Text color={textColorSecondary} fontSize="sm" fontWeight="500">
-            {
-              //@ts-ignore
-              info?.getValue()
-            }
-          </Text>
-        ),
+        cell: (info: any) =>
+          info?.column?.id === 'id' ? (
+            <Link href={`/admin/resources/${info?.getValue()}`}>
+              <Text
+                color={textColorSecondary}
+                fontSize="sm"
+                fontWeight="500"
+                minW="100px"
+              >
+                {info?.getValue()}
+              </Text>
+            </Link>
+          ) : (
+            <Text
+              color={textColorSecondary}
+              fontSize="sm"
+              fontWeight="500"
+              minW="100px"
+            >
+              {info?.getValue()}
+            </Text>
+          ),
       },
     ),
   );

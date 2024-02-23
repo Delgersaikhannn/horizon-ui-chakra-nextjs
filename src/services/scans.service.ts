@@ -21,4 +21,10 @@ const scansList = async (body: companyListProps) => {
   return res.data;
 };
 
-export { scansList };
+const getScanDetails = async (id: string) => {
+  const res = await _axios.get(`/scans/${id}`);
+
+  return res.data;
+};
+
+export { scansList, getScanDetails };

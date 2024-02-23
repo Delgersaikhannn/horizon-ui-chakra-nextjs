@@ -21,4 +21,9 @@ const resourceList = async (body: companyListProps) => {
   return res.data;
 };
 
-export { resourceList };
+const getResourceDetail = async (id: string) => {
+  const res = await _axios.get(`/resources/${id}`);
+
+  return res.data;
+};
+export { resourceList, getResourceDetail };

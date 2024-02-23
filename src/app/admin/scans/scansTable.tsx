@@ -26,6 +26,7 @@ import { User, UserList } from 'app/admin/users/page';
 // Custom components
 import * as React from 'react';
 import { Scan, ScanList } from './page';
+import Link from 'next/link';
 // Assets
 
 const columnHelper = createColumnHelper<Scan>();
@@ -36,7 +37,7 @@ type TopCreatorTableProps = {
 };
 
 // const columns = columnsDataCheck;
-export default function TasksTable(props: TopCreatorTableProps) {
+export default function ScansTable(props: TopCreatorTableProps) {
   const { data } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
@@ -60,19 +61,28 @@ export default function TasksTable(props: TopCreatorTableProps) {
             {el}
           </Text>
         ),
-        cell: (info: string) => (
-          <Text
-            color={textColorSecondary}
-            fontSize="sm"
-            fontWeight="500"
-            minW="100px"
-          >
-            {
-              //@ts-ignore
-              info?.getValue()
-            }
-          </Text>
-        ),
+        cell: (info: any) =>
+          info?.column?.id === 'id' ? (
+            <Link href={`/admin/scans/${info?.getValue()}`}>
+              <Text
+                color={textColorSecondary}
+                fontSize="sm"
+                fontWeight="500"
+                minW="100px"
+              >
+                {info?.getValue()}
+              </Text>
+            </Link>
+          ) : (
+            <Text
+              color={textColorSecondary}
+              fontSize="sm"
+              fontWeight="500"
+              minW="100px"
+            >
+              {info?.getValue()}
+            </Text>
+          ),
       },
     ),
   );
