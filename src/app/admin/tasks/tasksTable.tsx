@@ -105,7 +105,7 @@ export default function TasksTable(props: TopCreatorTableProps) {
         boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
       >
         <Text color={textColor} fontSize="xl" fontWeight="600">
-          Scans
+          Tasks
         </Text>
       </Flex>
       <Box w="100%" overflow="auto">

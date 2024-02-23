@@ -27,6 +27,7 @@ import { User, UserList } from 'app/admin/users/page';
 import * as React from 'react';
 import { Scan, ScanList } from './page';
 import Link from 'next/link';
+import { Paginator } from 'components/paginator';
 // Assets
 
 const columnHelper = createColumnHelper<Scan>();
@@ -34,15 +35,24 @@ const columnHelper = createColumnHelper<Scan>();
 type TopCreatorTableProps = {
   data: ScanList;
   isLoading: boolean;
+  pagination: { page: number; pageby: number };
+  setPagination: React.Dispatch<
+    React.SetStateAction<{ page: number; pageby: number }>
+  >;
 };
 
 // const columns = columnsDataCheck;
 export default function ScansTable(props: TopCreatorTableProps) {
-  const { data } = props;
+  const { data, pagination, setPagination } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = useColorModeValue('secondaryGray.600', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
+
+  const paginatorProps = {
+    pagination,
+    setPagination,
+  };
 
   const col0 = data?.result[0] ?? {};
   const columns = Object.keys(col0)?.map((el) =>
@@ -116,6 +126,7 @@ export default function ScansTable(props: TopCreatorTableProps) {
         <Text color={textColor} fontSize="xl" fontWeight="600">
           Scans
         </Text>
+        <Paginator total={data?.pagination?.total ?? 0} {...paginatorProps} />
       </Flex>
       <Box w="100%" overflow="auto">
         <Box>

@@ -6,7 +6,6 @@ import {
   useDisclosure,
   useColorModeValue,
 } from '@chakra-ui/react';
-import Footer from 'components/footer/FooterAdmin';
 import { AdminNavbar } from 'components/navbar/NavbarAdmin';
 // Layout components
 import Sidebar from 'components/sidebar/Sidebar';
@@ -100,9 +99,6 @@ export default function AdminLayout(props: DashboardLayoutProps) {
             pt="50px"
           >
             {children}
-          </Box>
-          <Box>
-            <Footer />
           </Box>
         </Box>
       </SidebarContext.Provider>

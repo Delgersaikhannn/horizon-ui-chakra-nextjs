@@ -55,13 +55,14 @@ export default function NftMarketplace() {
   const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
   const brandColor = useColorModeValue('brand.500', 'white');
 
+  const [pagination, setPagination] = useState({ page: 1, pageby: 25 });
   const [isLoading, setIsLoading] = useState(true);
   const [companies, setCompanies] = useState<CompanyList>(null);
 
   const getCompanies = async () => {
     try {
       setIsLoading(true);
-      const res = await companyList({});
+      const res = await companyList(pagination);
       setCompanies(res);
       setIsLoading(false);
     } catch (err) {
@@ -72,6 +73,8 @@ export default function NftMarketplace() {
   const init = async () => {
     getCompanies();
   };
+
+  const props = { pagination, setPagination };
 
   useEffect(() => {
     init();
@@ -107,7 +110,11 @@ export default function NftMarketplace() {
         w="100%"
       >
         <Card px="0px" mb="20px" maxW="100%">
-          <CompaniesTable userList={companies} isLoading={isLoading} />
+          <CompaniesTable
+            userList={companies}
+            isLoading={isLoading}
+            {...props}
+          />
         </Card>
       </Grid>
       {/* Delete Product */}

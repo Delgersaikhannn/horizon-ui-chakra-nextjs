@@ -27,6 +27,7 @@ import { User, UserList } from 'app/admin/users/page';
 import * as React from 'react';
 import { Resource, ResoureList } from './page';
 import Link from 'next/link';
+import { Paginator } from 'components/paginator';
 // Assets
 
 const columnHelper = createColumnHelper<Resource>();
@@ -34,15 +35,24 @@ const columnHelper = createColumnHelper<Resource>();
 type TopCreatorTableProps = {
   data: ResoureList;
   isLoading: boolean;
+  pagination: { page: number; pageby: number };
+  setPagination: React.Dispatch<
+    React.SetStateAction<{ page: number; pageby: number }>
+  >;
 };
 
 // const columns = columnsDataCheck;
 export default function ResourcesTable(props: TopCreatorTableProps) {
-  const { data } = props;
+  const { data, pagination, setPagination } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = useColorModeValue('secondaryGray.600', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
+
+  const paginatorProps = {
+    pagination,
+    setPagination,
+  };
 
   const col0 = data?.result[0] ?? {};
   const columns = Object.keys(col0)?.map((el) =>
@@ -114,8 +124,9 @@ export default function ResourcesTable(props: TopCreatorTableProps) {
         boxShadow="0px 40px 58px -20px rgba(112, 144, 176, 0.26)"
       >
         <Text color={textColor} fontSize="xl" fontWeight="600">
-          Scans
+          Resources
         </Text>
+        <Paginator total={data?.pagination.total ?? 0} {...paginatorProps} />
       </Flex>
       <Box w="100%" overflow="auto">
         <Box>

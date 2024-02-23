@@ -23,6 +23,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { User, UserList } from 'app/admin/users/page';
+import { Paginator } from 'components/paginator';
 import Link from 'next/link';
 // Custom components
 import * as React from 'react';
@@ -33,15 +34,24 @@ const columnHelper = createColumnHelper<User>();
 type TopCreatorTableProps = {
   userList: UserList;
   isLoading: boolean;
+  pagination: { page: number; pageby: number };
+  setPagination: React.Dispatch<
+    React.SetStateAction<{ page: number; pageby: number }>
+  >;
 };
 
 // const columns = columnsDataCheck;
 export default function CompaniesTable(props: TopCreatorTableProps) {
-  const { userList } = props;
+  const { userList, pagination, setPagination } = props;
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const textColor = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = useColorModeValue('secondaryGray.600', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
+
+  const paginatorProps = {
+    pagination,
+    setPagination,
+  };
 
   const columns = [
     columnHelper.accessor('id', {
@@ -199,6 +209,10 @@ export default function CompaniesTable(props: TopCreatorTableProps) {
         <Text color={textColor} fontSize="xl" fontWeight="600">
           Companies
         </Text>
+        <Paginator
+          total={userList?.pagination?.total ?? 0}
+          {...paginatorProps}
+        />
       </Flex>
       <Box w="100%" overflow="auto">
         <Box>
